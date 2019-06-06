@@ -13,6 +13,8 @@ import createRootReducer from './rootReducer';
 import rootSaga from './rootSaga';
 import Routes from './Routes';
 
+import 'devextreme/dist/css/dx.common.css';
+import 'devextreme/dist/css/dx.light.css';
 import 'resources/styles/index.scss';
 
 export const history = createHistory();
