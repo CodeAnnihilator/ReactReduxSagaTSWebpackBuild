@@ -9,7 +9,7 @@ class TabsPannel extends React.PureComponent<any> {
 
 	public state = {
 		selectedIndex: 0,
-	}
+	};
 
 	private readonly onSelectionChanged = (args: any) => {
 		if (args.name === 'selectedIndex') {
@@ -28,7 +28,7 @@ class TabsPannel extends React.PureComponent<any> {
 				selectedIndex={selectedIndex}
 				onOptionChanged={this.onSelectionChanged}
 			/>
-		)
+		);
 	}
 }
 

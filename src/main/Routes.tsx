@@ -1,19 +1,20 @@
-import * as React from "react";
-import { hot } from "react-hot-loader";
-import { Redirect, Route, Switch } from "react-router-dom";
+import * as React from 'react';
+import {hot} from 'react-hot-loader';
+import {Redirect, Route, Switch} from 'react-router-dom';
 
-import CommonLayout from "library/common/components/Layouts/Common/CommonLayout";
-import ProtectedLayout from "library/common/components/Layouts/Protected/ProtectedLayout";
-import Auth from "modules/Auth/containers/AuthContainer";
+import CommonLayout from 'library/common/components/Layouts/Common/CommonLayout';
+import ProtectedLayout from 'library/common/components/Layouts/Protected/ProtectedLayout';
 import DataGrid from 'library/common/components/DataGrid/DataGrid';
-import Dashboard from "modules/Dashboard/Dashboard";
+
+import Auth from 'modules/Auth/containers/AuthContainer';
+import Dashboard from 'modules/Dashboard/Dashboard';
 
 const Routes = () => (
 	<Switch>
-		<Redirect exact from="/dashboard" to="/dashboard/sku" />
+		<Redirect exact from='/dashboard' to='/dashboard/sku' />
 		<Route
-			path="/dashboard"
-			render={({ match: { url } }) => (
+			path='/dashboard'
+			render={({match: {url}}) => (
 				<ProtectedLayout>
 					<Dashboard>
 						<Switch>
@@ -33,11 +34,11 @@ const Routes = () => (
 			)}
 		/>
 		<Route
-			path="/"
+			path='/'
 			render={() => (
 				<CommonLayout>
 					<Switch>
-						<Route path="/auth" component={Auth} />
+						<Route path='/auth' component={Auth} />
 						<Route render={() => <div>Oops...</div>} />
 					</Switch>
 				</CommonLayout>

@@ -7,7 +7,7 @@ import authReducer from 'modules/Auth/reducer';
 const createRootReducer = (history: any) => combineReducers({
 	entities: entitiesReducer,
 	router: connectRouter(history as any),
-	auth: authReducer
+	auth: authReducer,
 });
 
 export default createRootReducer;
