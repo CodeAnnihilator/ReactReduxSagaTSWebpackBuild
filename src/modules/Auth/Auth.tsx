@@ -1,6 +1,6 @@
 import React from 'react';
-import {Redirect} from 'react-router-dom'
 import Form from 'devextreme-react/form';
+import {Redirect} from 'react-router-dom';
 import {Button} from 'devextreme-react/button';
 import {LoadIndicator} from 'devextreme-react/load-indicator';
 
@@ -8,7 +8,7 @@ import styles from './auth.scss';
 
 interface IProps {
 	isAuth: boolean;
-	sendAuthData: (login: string, password: string) => void;
+	//sendAuthData: (login: string, password: string) => void;
 }
 
 interface IState {
@@ -21,20 +21,20 @@ export default class Auth extends React.PureComponent<IProps, IState> {
 		login: '',
 		password: '',
 	};
-	
+
 	private readonly submitAuthForm = (e: any) => {
 		e.preventDefault();
-		const { login, password } = this.state;
-		this.props.sendAuthData(login, password);
+		const {login, password} = this.state;
+		//this.props.sendAuthData(login, password);
 	}
- 
+
 	public render() {
-		const { login, password } = this.state;
-		const { isAuth } = this.props;
+		const {login, password} = this.state;
+		const {isAuth} = this.props;
 		const loading = false;
-		
-		if(isAuth) {
-			return <Redirect to='/dashboard' />
+
+		if (isAuth) {
+			return <Redirect to='/dashboard' />;
 		}
 
 		return (
@@ -45,7 +45,7 @@ export default class Auth extends React.PureComponent<IProps, IState> {
 						id='auth'
 						formData={{
 							username: login,
-							password: password,
+							password: {password},
 						}}
 						items={[
 							{
@@ -53,10 +53,10 @@ export default class Auth extends React.PureComponent<IProps, IState> {
 								label: {
 									text: 'Пользователь',
 								},
-								validationRules: [{ type: 'required', message: 'Обязательное поле' }],
+								validationRules: [{type: 'required', message: 'Обязательное поле'}],
 								editorOptions: {
 									value: login,
-									onValueChanged: (e: any) => this.setState({ login: e.value }),
+									onValueChanged: (e: any) => this.setState({login: e.value}),
 								},
 							},
 							{
@@ -64,11 +64,11 @@ export default class Auth extends React.PureComponent<IProps, IState> {
 								label: {
 									text: 'Пароль',
 								},
-								validationRules: [{ type: 'required', message: 'Обязательное поле' }],
+								validationRules: [{type: 'required', message: 'Обязательное поле'}],
 								editorOptions: {
 									mode: 'password',
 									value: password,
-									onValueChanged: (e: any) =>  this.setState({ password: e.value }),
+									onValueChanged: (e: any) =>  this.setState({password: e.value}),
 								},
 							},
 						]}

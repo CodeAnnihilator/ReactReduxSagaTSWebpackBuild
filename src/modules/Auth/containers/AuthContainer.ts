@@ -1,17 +1,18 @@
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
-import { RootState } from 'main';
+import {RootState} from 'main';
 
 import Auth from '../Auth';
 
-import {sendAuthData} from '../actions'
+// import {sendAuthData} from '../actions';
+import {getIsAuth} from '../selectors';
 
 const mapStateToProps = (state: RootState) => ({
-  isAuth: state.auth.isAuth
-})
+	isAuth: getIsAuth(state),
+});
 
-const mapDispatchToProps = {
-  sendAuthData
-}
+// const mapDispatchToProps = {
+// 	sendAuthData,
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Auth);
+export default connect(mapStateToProps)(Auth);
