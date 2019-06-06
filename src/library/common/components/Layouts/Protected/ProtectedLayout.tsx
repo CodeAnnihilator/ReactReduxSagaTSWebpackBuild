@@ -1,7 +1,5 @@
 import React from 'react';
 
-const ProtectedLayout: React.FC<any> = ({children}) => (
-	<div>{children}</div>
-);
+const ProtectedLayout: React.FC<any> = ({children}) => <div>{children}</div>;
 
 export default ProtectedLayout;

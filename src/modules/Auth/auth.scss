@@ -1,0 +1,35 @@
+.auth {
+	&__form {
+		width: 400px;
+		height: auto;
+		position: absolute;
+		top: 27%;
+		left: 50%;
+		transform: translate(-50%, 0);
+		border: 1px solid #CCC;
+		border-radius: 6px;
+		padding: 30px 20px;
+
+		&__button {
+			display: block;
+			margin: auto;
+			margin-top: 18px;
+
+			.dx-loadindicator-icon .dx-loadindicator-segment {
+				background: white;
+			}
+
+			& > div {
+				padding: 2px !important;
+			}
+
+			&__label {
+			}
+		}
+		
+		&__loading {
+			vertical-align: middle;
+			margin-right: 5px;
+		}
+	}
+}

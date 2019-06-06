@@ -1,0 +1,29 @@
+.dashboard {
+	height: 100vh;
+	padding: 40px 60px;
+
+	&__content {
+		display: flex;
+		height: 100%;
+		border: 1px solid #CCC;
+		border-radius: 4px;
+		padding: 10px;
+		background-color: #EFEFEF;
+
+		&__views {
+			flex-grow: 1;
+			display: flex;
+			flex-direction: column;
+
+			& > div:nth-child(2) {
+				flex-grow: 1;
+				background-color: white;
+				// border: 1px solid #ccc;
+			}
+		}
+	}
+}
+
+.tabPanel {
+	width: 100%;
+}
