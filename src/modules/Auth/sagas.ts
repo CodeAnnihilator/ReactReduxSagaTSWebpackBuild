@@ -1,77 +1,83 @@
 import {takeLatest, call, put} from 'redux-saga/effects';
 
 import {
-	// loginRequest,
+	loginRequest,
 	refreshTokenRequest,
 	verifyTokenRequest,
 } from './api';
 
 import {
 	startAuthRequest,
-	// stopAuthRequest,
+	stopAuthRequest,
 	login as loginUser,
 	logout,
+	startTokenRefresh,
+	stopTokenRefresh,
+	verifyToken,
+	sendAuthData,
 } from './actions';
 
 import {authActionTypes} from './constants';
 
-function* authenticateWithLoginAndPassword(action: ReturnType<typeof loginUser>) {
-	return yield put(loginUser());
-	// console.log('Starting auth saga');
-	// yield put(startAuthRequest);
-	// const { login, pass } = action;
-	// try {
-	// 	// throw new Error("access denied");
-	// 	const authResponse =  yield call(loginRequest, { login, pass });
-	// 	// const {
-	// 	//   data: { access, refresh }
-	// 	// } = authResponse;
-	// 	localStorage.setItem('access_token', "VALID_ACCESS_TOKEN");
-	// 	localStorage.setItem('refresh_token', "VALID_REFRESH_TOKEN");
-	// 	yield put(stopAuthRequest);
-	// 	yield put(loginUser)
-	// } catch(error) {
-	// 	console.log(error);
-	// }
+function* authenticateWithLoginAndPassword(action: ReturnType<typeof sendAuthData>) {
+	yield put(startAuthRequest());
+	const {login, pass} = action;
+	try {
+		const authResponse =  yield call(loginRequest, {login, pass});
+		const {
+			data: {access, refresh}
+		} = authResponse;
+
+		localStorage.setItem('access_token', access);
+		localStorage.setItem('refresh_token', refresh);
+		yield put(verifyToken());
+	} catch (error) {
+		yield put(stopAuthRequest());
+	}
 }
 
-function* refreshToken(action: ReturnType<typeof logout>) {
+function* refreshToken() {
+	yield put(startTokenRefresh());
+	const refreshToken = localStorage.getItem('refresh_token');
 
-	const token = localStorage.getItem('refresh_token');
-
-	if (!token) {
+	if(!refreshToken){
 		return yield put(logout());
 	}
 
-	yield put(startAuthRequest());
-
 	try {
-		const refreshTokenResponse = yield call(refreshTokenRequest, {refresh: token});
-		// const {
-		//   data: { access },
-		// } = refreshTokenResponse;
-		localStorage.setItem('access_token', 'REFRESHED_ACCESS_TOKEN');
-	} catch (err) {
-		console.log(err);
+		const refreshTokenResponse = yield call(refreshTokenRequest, {refresh: refreshToken});
+		const {
+			data: {access},
+		} = refreshTokenResponse;
+		localStorage.setItem('access_token', access);
+		yield put(stopTokenRefresh());
+
+	} catch(error) {
+		yield put(stopTokenRefresh());
+		yield put(logout());
 	}
 }
 
-function* verifyToken() {
+function* verifyTokenSaga() {
 	const accessToken = localStorage.getItem('access_token');
-	if (!accessToken) {
-		// AUTH FAIL
+
+	if(!accessToken) {
+		return yield put(logout());
 	}
+
 	try {
 		const verifiedTokenResponse = yield call(verifyTokenRequest);
-		// const {
-		//   data: { exp, user_id, caption, permissions },
-		// } = response;
-
-	} catch (err) {
-		console.log(err);
+		const {
+			data: {exp, user_id, caption, permissions},
+		} = verifiedTokenResponse;
+		yield put(loginUser(exp, user_id, caption, permissions));
+	} catch (error) {
+		yield put(logout());
 	}
 }
 
 export default function* watchEntities() {
 	yield takeLatest(authActionTypes.SEND_AUTH_DATA, authenticateWithLoginAndPassword);
+	yield takeLatest(authActionTypes.REFRESH_TOKEN, refreshToken);
+	yield takeLatest(authActionTypes.VERIFY_TOKEN, verifyTokenSaga);
 }

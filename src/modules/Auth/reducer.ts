@@ -1,4 +1,4 @@
-import {ActionType, getType, createStandardAction} from 'typesafe-actions';
+import {ActionType, getType} from 'typesafe-actions';
 
 import * as actions from './actions';
 
@@ -8,7 +8,8 @@ export type AuthState = Readonly<{
 	userId: string | null;
 	caption: string | null;
 	pendingAuthRequest: boolean;
-}>;
+	tokenIsRefreshing: boolean;
+}>
 
 const initialState: AuthState = {
 	isAuth: false,
@@ -16,6 +17,7 @@ const initialState: AuthState = {
 	userId: null,
 	caption: null,
 	pendingAuthRequest: false,
+	tokenIsRefreshing: false,
 };
 
 export type AuthActions = ActionType<typeof actions>;
@@ -36,13 +38,22 @@ export default (state = initialState, action: AuthActions): AuthState => {
 			return {
 				...state,
 				isAuth: true,
+				userId: action.userId,
+				caption: action.caption,
+				permissions: action.permissions,
 			};
 		case getType(actions.logout):
+			localStorage.removeItem('access_token');
+			localStorage.removeItem('refresh_token');
+
 			return {
 				...state,
 				isAuth: false,
+				permissions: [],
+				userId: null,
+				caption: null,
 			};
 		default:
 			return state;
 	}
-};
+}
