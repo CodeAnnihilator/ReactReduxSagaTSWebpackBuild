@@ -1,3 +1,3 @@
-import {fetch} from 'library/utils/fetch';
+import axios from 'axios';
 
-export const requestTestData = () => fetch.get('testdata');
+export const requestTestData = () => axios.get('testdata');

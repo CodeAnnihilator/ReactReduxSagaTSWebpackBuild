@@ -9,6 +9,7 @@ export type AuthState = Readonly<{
 	caption: string | null;
 	pendingAuthRequest: boolean;
 	tokenIsRefreshing: boolean;
+	tokenExpiration: number | null;
 }>
 
 const initialState: AuthState = {
@@ -18,6 +19,7 @@ const initialState: AuthState = {
 	caption: null,
 	pendingAuthRequest: false,
 	tokenIsRefreshing: false,
+	tokenExpiration: null
 };
 
 export type AuthActions = ActionType<typeof actions>;
@@ -41,6 +43,7 @@ export default (state = initialState, action: AuthActions): AuthState => {
 				userId: action.userId,
 				caption: action.caption,
 				permissions: action.permissions,
+				tokenExpiration: action.exp
 			};
 		case getType(actions.logout):
 			localStorage.removeItem('access_token');

@@ -3,7 +3,7 @@ import {hot} from 'react-hot-loader';
 import {Redirect, Route, Switch} from 'react-router-dom';
 
 import CommonLayout from 'library/common/components/Layouts/Common/CommonLayout';
-import ProtectedLayout from 'library/common/components/Layouts/Protected/ProtectedLayout';
+import ProtectedLayout from 'library/common/containers/ProtectedLayoutContainer';
 import DataGrid from 'library/common/components/DataGrid/DataGrid';
 
 import Auth from 'modules/Auth/containers/AuthContainer';

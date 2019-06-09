@@ -17,6 +17,8 @@ import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.css';
 import 'resources/styles/index.scss';
 
+import 'library/utils/axiosConfig';
+
 export const history = createHistory();
 
 const sagaMiddleware = createSagaMiddleware();
@@ -24,7 +26,7 @@ const rootReducer = createRootReducer(history);
 
 export type RootState = StateType<typeof rootReducer>;
 
-const store = createStore(
+export const store = createStore(
 	enableBatching(rootReducer),
 	composeWithDevTools(
 		applyMiddleware(
