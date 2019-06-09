@@ -1,16 +1,7 @@
-import {action, createCustomAction, createAction, createStandardAction} from 'typesafe-actions';
+import {createCustomAction, createStandardAction} from 'typesafe-actions';
 
 import {authActionTypes} from './constants';
 
-// export const sendAuthData =
-// 	createStandardAction(authActionTypes.SEND_AUTH_DATA)
-// 		<any>();
-
-// export const sendAuthData = (login: string, pass: string) => ({
-// 	type: authActionTypes.SEND_AUTH_DATA,
-// 	login,
-// 	pass,
-// });
 export const sendAuthData = createCustomAction(authActionTypes.SEND_AUTH_DATA, type =>
 	(login: string, pass: string) => ({
 		type, login, pass,

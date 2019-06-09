@@ -19,8 +19,8 @@ interface IState {
 
 export default class Auth extends React.Component<IProps, IState> {
 	public state = {
-		login: '',
-		password: '',
+		login: 'test@email.ru',
+		password: '322IGOR322',
 	};
 	
 	private readonly submitAuthForm = (e: any) => {

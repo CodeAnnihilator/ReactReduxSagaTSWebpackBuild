@@ -1,23 +1,21 @@
-import {connect} from 'react-redux';
-import {Dispatch} from 'redux'
+import { connect } from 'react-redux'
 
-import {RootState} from 'main';
+import { RootState } from 'main'
 
-import Auth from '../Auth';
-import {sendAuthData, verifyToken} from '../actions'
+import Auth from '../Auth'
+import { sendAuthData, verifyToken } from '../actions'
 
-import {getIsAuth} from '../selectors';
+import { getIsAuth } from '../selectors'
 
 const mapStateToProps = (state: RootState) => ({
-	isAuth: getIsAuth(state),
-});
-
-// const mapDispatchToProps = (dispatch: Dispatch) => ({
-// 	sendAuthData: (login: string, password: string) => dispatch(sendAuthData(login,password)),
-// })
+  isAuth: getIsAuth(state)
+})
 
 const mapDispatchToProps = {
-	sendAuthData
+  sendAuthData
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Auth);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Auth)

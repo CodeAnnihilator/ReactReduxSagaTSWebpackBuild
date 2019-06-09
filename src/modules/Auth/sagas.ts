@@ -20,6 +20,8 @@ import {
 import {authActionTypes} from './constants';
 
 function* authenticateWithLoginAndPassword(action: ReturnType<typeof sendAuthData>) {
+	localStorage.removeItem('access_token');
+	localStorage.removeItem('refresh_token');
 	yield put(startAuthRequest());
 	const {login, pass} = action;
 	try {
@@ -28,10 +30,13 @@ function* authenticateWithLoginAndPassword(action: ReturnType<typeof sendAuthDat
 			data: {access, refresh}
 		} = authResponse;
 
+		
+
 		localStorage.setItem('access_token', access);
 		localStorage.setItem('refresh_token', refresh);
 		yield put(verifyToken());
 	} catch (error) {
+		//TO DO: ADD ERROR HANDLING
 		yield put(stopAuthRequest());
 	}
 }
@@ -45,7 +50,7 @@ function* refreshToken() {
 	}
 
 	try {
-		const refreshTokenResponse = yield call(refreshTokenRequest, {refresh: refreshToken});
+		const refreshTokenResponse = yield call(refreshTokenRequest, refreshToken);
 		const {
 			data: {access},
 		} = refreshTokenResponse;
@@ -66,7 +71,7 @@ function* verifyTokenSaga() {
 	}
 
 	try {
-		const verifiedTokenResponse = yield call(verifyTokenRequest);
+		const verifiedTokenResponse = yield call(verifyTokenRequest, accessToken);
 		const {
 			data: {exp, user_id, caption, permissions},
 		} = verifiedTokenResponse;
