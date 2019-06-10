@@ -12,7 +12,7 @@ declare module "*.svg" {
   export default content;
 }
 
-declare module "*.svg1" {
+declare module "*.svg1sadadasdasdasd" {
   const content: any;
   export default content;
 }
